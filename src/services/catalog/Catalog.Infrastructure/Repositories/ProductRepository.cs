@@ -17,7 +17,7 @@ public class ProductRepository(ICatalogContext context) : IProductRepository, IT
         return await context.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Product>> GetProductsByName(string productName)
+    public async Task<IList<Product>> GetProductsByName(string productName)
     {
         var filter = Builders<Product>.Filter.Eq(p => p.Name, productName);
         return await context.Products

@@ -6,5 +6,5 @@ namespace Catalog.Core.Entities;
 public abstract class BaseEntity
 {
     [BsonId, BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    public string Id { get; init; } = string.Empty;
 }

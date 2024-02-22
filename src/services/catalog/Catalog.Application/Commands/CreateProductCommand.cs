@@ -9,12 +9,12 @@ namespace Catalog.Application.Commands;
 public class CreateProductCommand : IRequest<ProductResponse>
 { 
     [BsonElement("Name")]
-    public string Name { get; set; }
-    public string Summary { get; set; }
-    public string Description { get; set; }
-    public string ImageFile { get; set; }
-    public ProductBrand Brand { get; set; }
-    public ProductType Type { get; set; }
+    public string Name { get; init; } = string.Empty;
+    public string Summary { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public string ImageFile { get; init; } = string.Empty;
+    public ProductBrand Brand { get; init; } = default!;
+    public ProductType Type { get; init; } = default!;
     [BsonRepresentation(BsonType.Decimal128)]
-    public decimal Price { get; set; }
+    public decimal Price { get; init; }
 }

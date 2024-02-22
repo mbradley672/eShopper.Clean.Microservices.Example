@@ -2,6 +2,6 @@
 
 public class TypeResponse
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
+    public string Id { get; init; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
 }

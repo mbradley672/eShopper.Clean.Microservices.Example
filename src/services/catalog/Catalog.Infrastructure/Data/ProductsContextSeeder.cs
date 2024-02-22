@@ -12,7 +12,7 @@ public static class ProductsContextSeeder
         var path = Path.Combine("Data", "SeedData", "products.json");
         if (!checkProducts)
         {
-            var productData = await File.ReadAllTextAsync(path);
+            var productData = await File.ReadAllTextAsync("../Catalog.Infrastructure/Data/SeedData/products.json");
             var products = JsonSerializer.Deserialize<List<Product>>(productData);
             if (products is not null)
             {

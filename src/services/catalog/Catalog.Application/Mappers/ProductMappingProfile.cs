@@ -22,7 +22,7 @@ public static class MapperExtensions
     {
         var config = new MapperConfiguration(cfg =>
         {
-            cfg.ShouldMapProperty = info => info.GetMethod.IsPublic || info.GetMethod.IsAssembly;
+            cfg.ShouldMapProperty = info => info.GetMethod!.IsPublic || info.GetMethod.IsAssembly;
             cfg.AddProfile<ProductMappingProfile>();
         });
         var mapper = config.CreateMapper();

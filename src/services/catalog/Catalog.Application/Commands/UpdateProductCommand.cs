@@ -8,14 +8,14 @@ namespace Catalog.Application.Commands;
 public class UpdateProductCommand : IRequest<bool>
 {
     [BsonId, BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
     [BsonElement("Name")]
-    public string Name { get; set; }
-    public string Summary { get; set; }
-    public string Description { get; set; }
-    public string ImageFile { get; set; }
-    public ProductBrand Brand { get; set; }
-    public ProductType Type { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Summary { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string ImageFile { get; set; } = string.Empty;
+    public ProductBrand Brand { get; set; } = default!;
+    public ProductType Type { get; set; } = default!;
     [BsonRepresentation(BsonType.Decimal128)]
     public decimal Price { get; set; }
 }

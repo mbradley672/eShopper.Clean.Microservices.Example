@@ -20,8 +20,10 @@ public class CatalogContext : ICatalogContext
         ProductBrands = database.GetCollection<ProductBrand>(configuration.GetValue<string>("DatabaseSettings:ProductBrandsCollectionName"));
         ProductTypes = database.GetCollection<ProductType>(configuration.GetValue<string>("DatabaseSettings:ProductTypesCollectionName"));
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         ProductsContextSeeder.SeedData(Products);
         BrandContextSeeder.SeedData(ProductBrands);
         TypeContextSeeder.SeedData(ProductTypes);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
 }
