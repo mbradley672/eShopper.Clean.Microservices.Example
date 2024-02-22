@@ -59,7 +59,7 @@ public class ProductRepository(ICatalogContext context) : IProductRepository, IT
         return await context.ProductTypes.Find(p=> true).ToListAsync();
     }
 
-    public async Task<IEnumerable<ProductBrand>> GetAllBrands()
+    public async Task<IEnumerable<ProductBrand>> GetAllBrandsAsync()
     {
         return await context.ProductBrands.Find(p=> true).ToListAsync();
     }
