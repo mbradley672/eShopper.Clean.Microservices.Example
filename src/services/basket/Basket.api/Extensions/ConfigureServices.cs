@@ -1,9 +1,7 @@
-﻿using System.Reflection;
-using Catalog.Application.Handlers;
-using Catalog.Application.Mappers;
-using Catalog.Core.Repositories;
-using Catalog.Infrastructure.Data;
-using Catalog.Infrastructure.Repositories;
+﻿using Basket.Application.Handlers;
+using Basket.Application.Mappers;
+using Basket.Core.Repositories;
+using Basket.Infrastructure.Repositories;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -18,17 +16,16 @@ public static class ConfigurationExtensions
         // Services
         services.AddControllers();
         services.AddApiVersioning();
-        services.AddHealthChecks()
-            .AddMongoDb(configuration["DatabaseSettings:ConnectionString"]!, 
-                name: "Catalog MongoDb Health Check", HealthStatus.Degraded, timeout: TimeSpan.FromSeconds(3), tags: new[] { "ready" });
-        services.AddSwaggerGen((c)=>{
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" });
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetValue<string>("CacheSettings:ConnectionString");
         });
-        services.AddAutoMapper(c=>c.AddProfile<ProductMappingProfile>());
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateProductHandler>());
-
-        // Context and Repositories
-        services.AddScoped<ICatalogContext, CatalogContext>();
+        services.AddHealthChecks().AddRedis(configuration.GetValue<string>("CacheSettings:ConnectionString"), "Redis Cache", HealthStatus.Degraded);
+        services.AddSwaggerGen((c)=>{
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" });
+        });
+        services.AddAutoMapper(c=>c.AddProfile<MappingProfile>());
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateShoppingCartCommandHandler>());
         services.AddRepositories();
         
         return services;
@@ -36,9 +33,7 @@ public static class ConfigurationExtensions
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IProductRepository, ProductRepository>();
-        services.AddScoped<IBrandRepository, ProductRepository>();
-        services.AddScoped<ITypesRepository, ProductRepository>();
+        services.AddScoped<IBasketRepository, BasketRepository>();
 
         return services;
     }

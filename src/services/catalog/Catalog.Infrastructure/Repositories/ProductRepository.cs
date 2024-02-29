@@ -58,7 +58,7 @@ public class ProductRepository(ICatalogContext context) : IProductRepository, IT
     private async Task<IReadOnlyList<Product>> DataFilter(CatalogSpecificationParams specificationParams,
         FilterDefinition<Product> filter)
     {
-        return specificationParams.Sort.ToLower() switch
+        return specificationParams.Sort!.ToLower() switch
         {
             "priceasc" => await context.Products.Find(filter)
                 .Sort(Builders<Product>.Sort.Ascending("Price"))
